@@ -1,0 +1,11 @@
+--- pytesser.py	2013-10-28 23:16:46.591983760 +0100
++++ pytesser2.py	2013-10-28 23:18:45.012570988 +0100
+@@ -17,7 +17,7 @@
+ def call_tesseract(input_filename, output_filename):
+ 	"""Calls external tesseract.exe on input file (restrictions on types),
+ 	outputting output_filename+'txt'"""
+-	args = [tesseract_exe_name, input_filename, output_filename]
++	args = [tesseract_exe_name, input_filename, output_filename, 'nobatch', 'digits']
+ 	proc = subprocess.Popen(args)
+ 	retcode = proc.wait()
+ 	if retcode!=0:

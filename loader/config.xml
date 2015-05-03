@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+author: Angel Olle Blazquez
+
+Example of XML configuration file
+-->
+<cfg>
+    <remote>
+        <domain>example_domain.com</domain>
+        <start_url>http://www.example_domain.com/url/url.html</start_url>
+        <ddomain>dwn.example_domain.com</ddomain>
+        <negative_responses>
+             <response>Negative response example 1</response>
+             <response>Negative response example 2</response>
+        </negative_responses>
+    </remote>
+
+    <local>
+        <name>nsp</name>
+        <save_dir>example</save_dir>
+        <max_retries>10</max_retries>
+        <tmp>yes/no: memory or disc usage</tmp>
+    </local>
+</cfg>

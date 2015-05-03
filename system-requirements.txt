@@ -1,0 +1,11 @@
+On Linux system:
+------------------
+python-dev==2.7.3-4
+libxml2-dev==2.8.0
+libxslt1-dev==1.1.26-14.1
+tesseract-ocr==3.02.01-6
+
+pytesser in site-packages directory if you use virtualenv environment.
+
+
+
