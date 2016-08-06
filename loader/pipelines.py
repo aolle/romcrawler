@@ -57,10 +57,10 @@ class loaderpipeline(object):
         return dict(form.fields)	
     
     def save_file(self, resp, platform, filename):
-        self.save_dir = self.save_dir+"/"+platform
+        self.save_dir = ''.join([self.save_dir, "/", platform])
         if not os.path.exists(self.save_dir):
             os.makedirs(self.save_dir)
-        with open(self.save_dir+"/"+filename,'w+') as f:
+        with open(''.join([self.save_dir, "/", filename]),'w+') as f:
             for chunk in resp.iter_content(chunk_size=1024):
                 if chunk:
                     f.write(chunk)
@@ -74,7 +74,7 @@ class loaderpipeline(object):
         img_file.resize((116, 56), Image.NEAREST)
         if self.tmp:
             with tmanage() as t:  
-                n = t+"/code.tif"
+                n = ''.join([t, "/code.tif"])
                 img_file.save(n)
 	        img_file = Image.open(n)
                 s = image_to_string(img_file)
@@ -92,10 +92,10 @@ class loaderpipeline(object):
     def process_item(self, item, spider):
         self.parse_cfg()
         retries = 1
-        while retries<self.max_retries:
+        while retries < self.max_retries:
 		jar = cookielib.CookieJar()
 		opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(jar))
-		url = "http://"+item['url'].strip()
+		url = ''.join(["http://", item['url'].strip()])
 		site = opener.open(url).read()
 		dom = lxml.html.fromstring(site)
 		imgurl = dom.xpath('//div[@id="codecheck"]/img/@src')[0]
@@ -103,15 +103,15 @@ class loaderpipeline(object):
 		a,b= dom.forms[1].action.split('?')[1].split('=')
 		c = {}
 		c[a]=b	
-		self.http_header['Refer']=url
+		self.http_header['Refer'] = url
 		resp = requests.post(dom.forms[1].action.split('?')[0], params=c ,data=params, headers=self.http_header, cookies=requests.utils.dict_from_cookiejar(jar),stream=True)
                 if resp.text not in self.negative_responses:
-                    print self.save_file(resp, str(item['platform']), str(params['filename']))," ... saved!"
+                    print ''.join([ self.save_file(resp, str(item['platform']), str(params['filename']))," ... saved!" ])
                     break
-                else: retries+=1
+                else: retries += 1
                 
 
-        if retries == self.max_retries: print "Error: ",str(params['filename'])," not saved!"
+        if retries == self.max_retries: print ''.join(["Error: ", str(params['filename']), " not saved!"])
 
         return item
 
